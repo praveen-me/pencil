@@ -1,0 +1,57 @@
+@import './../vars';
+
+.add_story {
+  font-family: 'Roboto Slab', serif;
+}
+
+.add_story-head {
+  font-size: 2rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  padding: 1.5rem 0;
+}
+
+.add_story-form {
+  display: grid;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.file-hide {
+  width: 100%;
+  opacity: 0;
+  padding: 0.6rem 0;
+  cursor: pointer;
+}
+
+.file-btn {
+  position: relative;
+  margin: 1rem 0;
+  width: 150px;
+  text-align: center;
+  border: 1px solid $color1; 
+  border-radius: 5px;
+}
+
+.file-show {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(25%, -50%);
+  z-index: -1;
+}
+
+.description {
+  resize: none;
+  border: 1px solid #2d2d2d;
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+
+.story-btn {
+  width: 100px;
+  padding: 0.6rem;
+  margin: 1rem 0;
+  border: 1px solid #03a87c;
+}

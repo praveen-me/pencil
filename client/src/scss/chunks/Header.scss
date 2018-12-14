@@ -1,0 +1,27 @@
+// import vars 
+@import './../vars';
+
+header {
+  font-family: 'Ubuntu', sans-serif;
+  padding: 1rem 0;
+  box-shadow: 1px 1px 1px 1px #bebcbc;
+}
+
+.top-wrapper {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+}
+
+.auth-block {
+  display: flex;
+  justify-self: center;
+}
+
+.logo {
+  color: $color1;
+  font-size: 2.5rem;
+}
+
+.started-btn {
+  border: 1px solid #03a87c;
+}
