@@ -7,8 +7,8 @@ class LogIn extends Component {
       <div className="auth-container wrapper middle">
         <AuthButton />        
         <form className="auth-form">
-          <input type="text" name="username" id="" placeholder="Enter your username"/>
-          <input type="password" name="password" id="" placeholder="Enter your password"/>
+          <input type="text" name="username" placeholder="Enter your username"/>
+          <input type="password" name="password" placeholder="Enter your password"/>
           <button type="submit" className="btn started-btn">Log In</button>
         </form>
       </div>

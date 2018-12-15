@@ -21,6 +21,10 @@ export default function rootReducer(state = initState, action) {
       }
     }
 
+    case "SIGNUP" : {
+      return state
+    }
+
     default: return state;
   }
 }
