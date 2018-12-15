@@ -61,36 +61,40 @@ class SignUp extends Component {
   }
   
   render() {
-    const {msg} = this.state;
+    const {msg, isLoading} = this.state;
     return (
       <div className="auth-container wrapper middle">
         <AuthButton />        
-        <form className="auth-form" onSubmit={this.handleSubmit}>
-          <input type="text" 
-          name="fullName" 
-          placeholder="Enter you full name" 
-          onChange={this.handleChange}
-          required/>
-          <input type="text" 
-          name="username"
-          placeholder="Enter your username" 
-          onChange={this.handleChange}
-          required/>
-          <input type="email" 
-          name="email" 
-          placeholder="Enter your email" 
-          onChange={this.handleChange}
-          required/>
-          <input type="password" 
-          name="password" 
-          placeholder="Enter your password" 
-          onChange={this.handleChange}
-          required/>
-          {
-            msg ? <p className="warning-box">{msg}</p> : ''
-          }
-          <button type="submit" className="btn started-btn">Sign Up</button>
-        </form>
+        {
+          isLoading ? <p>Loading...</p> : (
+            <form className="auth-form" onSubmit={this.handleSubmit}>
+              <input type="text" 
+              name="fullName" 
+              placeholder="Enter you full name" 
+              onChange={this.handleChange}
+              required/>
+              <input type="text" 
+              name="username"
+              placeholder="Enter your username" 
+              onChange={this.handleChange}
+              required/>
+              <input type="email" 
+              name="email" 
+              placeholder="Enter your email" 
+              onChange={this.handleChange}
+              required/>
+              <input type="password" 
+              name="password" 
+              placeholder="Enter your password" 
+              onChange={this.handleChange}
+              required/>
+              {
+                msg ? <p className="warning-box">{msg}</p> : ''
+              }
+              <button type="submit" className="btn started-btn">Sign Up</button>
+            </form>
+          )
+        }
       </div>
     );
   }

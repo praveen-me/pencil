@@ -25,5 +25,11 @@ module.exports = {
       }     
     })
 
-  } 
+  }, 
+  logIn : (req, res) => {
+    User.findOne({ _id: req.user._id }, { password: 0 }, function(err, user) {
+      if(err) throw err;
+      res.json({ user: user })
+    });
+  }
 }

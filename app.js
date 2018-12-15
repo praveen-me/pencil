@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
+const passport = require('passport');
+const session = require('express-session');
 const app = express();
 
 //Connecting To Mongodb
@@ -35,8 +37,24 @@ if(process.env.NODE_ENV === 'development') {
   app.use(require('webpack-hot-middleware')(compiler));
 }
 
+
+// Set cookies session
+app.use(session({
+  secret : 'pencil users',
+  resave : false,
+  saveUninitialized : false,
+  cookie : {
+    maxAge : 500000
+  }
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
+require('./server/modules/passport')(passport)
+
 app.use('/',require('./server/routers/index'));
 app.use('/api', require('./server/routers/api'));
+
 
 
 app.listen(3001, (err) => {
