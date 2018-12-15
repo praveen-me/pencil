@@ -43,10 +43,24 @@ module.exports = {
         User.findOne({_id : user._id}, {password : 0}, (err, data) => {
           if(err) throw err;
           return res.json({
-            data
+            data : data
           })
         })
       });
     })(req, res, next);
+  }, 
+  isLoggedIn : (req, res) => {
+    if(req.user) {
+      User.findOne({_id : req.user._id}, {password : 0}, (err, data) => {
+        if(err) throw err;
+        return res.json({
+          data : data
+        })
+      })
+    } else {
+      return res.status(401).json({
+        msg : "Please login to get your details."
+      })
+    }
   }
 }

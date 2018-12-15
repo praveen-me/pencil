@@ -3,7 +3,6 @@ import AuthButton from './AuthButton';
 import { signUp } from '../../store/actions/authActions';
 import { connect } from 'react-redux';
 
-
 class SignUp extends Component {
   constructor(porps) {
     super(porps);
@@ -48,11 +47,15 @@ class SignUp extends Component {
           res.json()
           .then(data => {
             return this.setState({
+              isLoading : false,
               msg : data.msg
             })
           })
         } else {
           res.json().then(data => {
+            this.setState({
+              isLoading : false,
+            })
             this.props.dispatch(signUp());
             this.props.history.push('/login');
           })

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getAllStories } from '../../store/actions/storyActions';
 import { connect } from 'react-redux';
+import { setInitialUser } from '../../store/actions/authActions';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class Dashboard extends Component {
       isLoading : true
     }, () => {
       this.props.dispatch(getAllStories())
+      this.props.dispatch(setInitialUser())
     })
   }
 

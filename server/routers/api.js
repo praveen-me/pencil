@@ -11,4 +11,6 @@ router.post('/signup', user.signUp);
 
 router.post('/login', user.logIn);
 
+router.get('/isLoggedIn', user.isLoggedIn);
+
 module.exports = router;

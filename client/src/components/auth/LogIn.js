@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import AuthButton from './AuthButton';
+import { connect } from 'react-redux';
+import {logIn} from '../../store/actions/authActions';
+import {Redirect} from 'react-router-dom';
 
 class LogIn extends Component {
   constructor(props) {
@@ -17,6 +20,7 @@ class LogIn extends Component {
   handleChange = e => {
     this.setState({
       ...this.state,
+      msg : '',
       userInfo: {
         ...this.state.userInfo,
         [e.target.name] : e.target.value
@@ -37,8 +41,24 @@ class LogIn extends Component {
         },
         body : JSON.stringify(this.state.userInfo)
       })
-      .then(res => res.json())
-      .then(data => console.log(data))
+      .then(res => {
+        if(res.status === 200) {
+          res.json()
+          .then(data => {
+            // make action for data
+            this.props.dispatch(logIn(data))
+            console.log(data)
+          })
+        } else {
+          res.json()
+          .then(data => {
+            this.setState({
+              isLoading : false,
+              msg : data.msg,
+            })
+          })
+        }
+      })
     } else {
       this.setState({
         isLoading : false,
@@ -49,6 +69,10 @@ class LogIn extends Component {
   
   render() {
     const {msg} = this.state;
+    const {currentUser} = this.props;
+
+    if(currentUser._id) return <Redirect to="/" />
+
     return (
       <div className="auth-container wrapper middle">
         <AuthButton />        
@@ -66,4 +90,10 @@ class LogIn extends Component {
   }
 }
 
-export default LogIn;
+function mapStateToProps(state) {
+  return {
+    currentUser : state.currentUser
+  }
+}
+
+export default connect(mapStateToProps)(LogIn);

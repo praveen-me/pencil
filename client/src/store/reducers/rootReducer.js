@@ -25,6 +25,21 @@ export default function rootReducer(state = initState, action) {
       return state
     }
 
+    case "LOGIN" : {
+      console.log(action.data.data, "in login reducer")
+      const user = action.data.data
+      
+      const currentUser  = {
+        ...user,
+        userStories : []
+      }
+
+      return {
+        ...state,
+        currentUser
+      }
+    }
+
     default: return state;
   }
 }

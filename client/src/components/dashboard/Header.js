@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import LogoutLinks from '../auth/LogoutLinks';
+import LoginLinks from '../auth/LoginLinks';
 
 class Header extends Component {
   render() {
@@ -15,7 +16,7 @@ class Header extends Component {
             </Link>
           </div>
           {
-            currentUser._id ? '' : <LogoutLinks />
+            currentUser._id ? <LoginLinks /> : <LogoutLinks />
           }
         </div>       
       </header>
