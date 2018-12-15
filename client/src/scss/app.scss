@@ -1,0 +1,22 @@
+// Reset
+@import './reset';
+
+//Base
+@import './base';
+
+//Font families
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700');
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:300,400');
+
+//Header 
+@import './chunks/Header.scss';
+
+//Add Story 
+@import './chunks/AddStory.scss';
+
+// Add Dashboard
+@import './chunks/Dashboard.scss';
+
+// Add Auth
+@import './chunks/auth.scss'

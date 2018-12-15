@@ -1,0 +1,112 @@
+@import './vars';
+
+body {
+  position: relative;
+}
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
+.center {
+  text-align: center;
+}
+
+.wrapper {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.wrapper-big {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+a {
+  text-decoration: none;
+}
+
+ol, ul {
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  list-style: none;
+  margin-right: 20px;
+}
+
+.color-white {
+  color : #fff
+}
+
+.middle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+
+// .color-grey {
+//   color : $color3;
+// }
+
+// .color-main {
+//   color : $color1;
+// }
+
+.padding-tb {
+  padding: 1rem 0;
+}
+
+.margin-tb {
+  margin: 1rem 0;
+}
+
+.btn {
+  border: none;
+  background: transparent;
+  a {
+    color: #03a87c;
+  }
+  border-radius: 5px;
+  margin: 0 0.5rem;
+  font-size: 1rem;
+  font-family: 'Ubuntu', sans-serif;
+  cursor: pointer;
+  &:hover {
+    a {
+      color: #028864;
+    }
+    border-color: #028864;
+  }
+}
+
+input {
+  border: none;
+  width: 100%;
+  border-bottom: 1px solid $color1;
+  font-size: 1.3rem;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 300;
+  padding: 0.6rem 0 0.6rem 1rem;
+  &:focus {
+    outline: 1px solid #ddd;
+  }
+}
+
+::placeholder {
+  font-weight: 300;
+}

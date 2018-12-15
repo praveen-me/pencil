@@ -1,0 +1,28 @@
+@import './../_vars';
+
+main {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.story-container {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+}
+
+.story-head {
+  font-size: 1.8rem;
+  margin: 0.5rem 0;
+  color: #3c3b3b;
+}
+
+.story-description {
+  font-size: 1.1rem;
+  word-spacing: 0.5rem;
+  line-height: 1.4rem;
+  color: #2d2d2d;
+}
+
+

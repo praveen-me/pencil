@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
-import './app.scss';
+import './scss/app.scss';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Header from './components/dashboard/Header';
+import AddStory from './components/project/AddStory';
+import Dashboard from './components/dashboard/Dashboard';
+import SignUp from './components/auth/SignUp';
+import LogIn from './components/auth/LogIn';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <h1>Hello World</h1>
-        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt=""/>
-      </div>
+      <Router>
+        <React.Fragment>
+          <Header/>
+          <Switch>
+            <Route path="/" exact component={Dashboard}/>
+            <Route path="/add-story" component={AddStory}/>
+            <Route path="/signup" component={SignUp}/>
+            <Route path="/login" component={LogIn}/>
+          </Switch>
+        </React.Fragment>
+      </Router>
     );
   }
 }
