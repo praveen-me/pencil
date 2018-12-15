@@ -38,18 +38,17 @@ class LogIn extends Component {
         body : JSON.stringify(this.state.userInfo)
       })
       .then(res => res.json())
-      .then(data => {
-        console.log(data);
-      })
+      .then(data => console.log(data))
     } else {
       this.setState({
-        isLoading : true,
+        isLoading : false,
         msg : "Please connected to a secure connection."        
       })
     }
   }
   
   render() {
+    const {msg} = this.state;
     return (
       <div className="auth-container wrapper middle">
         <AuthButton />        
@@ -57,6 +56,9 @@ class LogIn extends Component {
           <input type="text" name="username" placeholder="Enter your username" onChange={this.handleChange}/>
           <input type="password" name="password" placeholder="Enter your password"
           onChange={this.handleChange}/>
+          {
+            msg ? <p className="warning-box">{msg}</p> : ''
+          }
           <button type="submit" className="btn started-btn">Log In</button>
         </form>
       </div>

@@ -1,4 +1,5 @@
 const User = require('./../models/User');
+const passport = require('passport');
 
 module.exports = {
   signUp : (req, res) => {
@@ -24,12 +25,28 @@ module.exports = {
         });
       }     
     })
-
   }, 
-  logIn : (req, res) => {
-    User.findOne({ _id: req.user._id }, { password: 0 }, function(err, user) {
-      if(err) throw err;
-      res.json({ user: user })
-    });
+  logIn : function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+      if (err) { return next(err); }
+      
+      if (!user) { 
+        return res.status(404).json({
+          msg :  "Invalid user creadentials. Please try again."
+        }) 
+      }
+  
+      req.logIn(user, function(err) {
+  
+        if (err) { return next(err); }
+        
+        User.findOne({_id : user._id}, {password : 0}, (err, data) => {
+          if(err) throw err;
+          return res.json({
+            data
+          })
+        })
+      });
+    })(req, res, next);
   }
 }

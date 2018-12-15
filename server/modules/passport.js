@@ -1,4 +1,3 @@
-const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('./../models/User');
 
@@ -17,15 +16,11 @@ module.exports = function(passport) {
       User.findOne({username : username}, function(err, user) {
         if(err) {return done(err)}
         if(!user) {
-          return done(null, false, {
-          msg : 'Incorrect username'
-          })
+          return done(null, false)
         }
         user.verifyPassword(password, function(err, isMatched) {
           if(!isMatched) {
-            return done(null, false, {
-              msg : "Password is not matched"
-            })
+            return done(null, false)
           } else {
             return done(null, user)
           }
