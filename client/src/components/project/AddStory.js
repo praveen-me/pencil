@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {addStory} from '../../store/actions/storyActions';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 
 
 class AddStory extends Component {
@@ -19,12 +20,13 @@ class AddStory extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    const {_id} = this.props.currentUser;
     this.setState({
       isLoading : true
     })
 
     // check if internet connection is there
-    if(navigator.onLine) {
+    if(navigator.onLine && _id) {
       fetch('/api/add-story', {
         method : "POST",
         headers : {
@@ -76,6 +78,8 @@ class AddStory extends Component {
   }
 
   render() {
+    if(!this.props.currentUser._id) return <Redirect to="/login"/>
+
     return (
       <div className="add_story wrapper-big">
         <h2 className="add_story-head center">add your new story</h2>
@@ -108,4 +112,10 @@ class AddStory extends Component {
   }
 }
 
-export default connect()(AddStory);
+function mapStateToProps(state) {
+  return {
+    currentUser : state.currentUser
+  }
+}
+
+export default connect(mapStateToProps)(AddStory);

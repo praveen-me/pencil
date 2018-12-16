@@ -1,12 +1,15 @@
 const User = require('./../models/User');
 const passport = require('passport');
+const Story = require('./../models/Story');
+const mongoose = require('mongoose');
 
 module.exports = {
   signUp : (req, res) => {
     const user = req.body;
     console.log(user.username)
     const newUser = new User({
-      ...user
+      ...user,
+      _id : new mongoose.Types.ObjectId()
     })
 
     User.findOne({username : user.username}, (err, data) => {
@@ -43,7 +46,8 @@ module.exports = {
         User.findOne({_id : user._id}, {password : 0}, (err, data) => {
           if(err) throw err;
           return res.json({
-            data : data
+            data : data,
+            stories : data.stories
           })
         })
       });

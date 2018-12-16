@@ -3,10 +3,12 @@ const SALT_FACTOR = 10;
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
+  _id : mongoose.Schema.Types.ObjectId,
   username : String,
   fullName : String,
   email : String,
-  password : String
+  password : String,
+  stories : [{type : mongoose.Schema.Types.ObjectId , ref : 'Story'}]
 })
 
 //making mmethod for decrypt password and compare with the original one

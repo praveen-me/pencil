@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Story = require('./../models/Story');
+const User = require('./../models/User');
 
 module.exports = {
   addStory : (req, res) => {
@@ -15,18 +16,31 @@ module.exports = {
     // });
 
     // res.wri
+    // if(req.user) {
+    //   User.findOne({_id : req.user._id}, {password : 0}, (err, data) => {
+    //     if(err) throw err;
+    //     return res.json({
+    //       data : data
+    //     })
+    //   })
+    // }    
 
     const newStory = Story({
-      ...story
+      ...story,
+      user : req.user._id,
+      userName : req.user.fullName
     });
 
-
-    newStory.save((err, data) => {
-      if(err) return res.json({
-        msg : 'Unable to save story.'
-      }) 
-      res.json(data); 
+    res.json({
+      newStory,
+      fullName : req.user.fullName
     })
+    // newStory.save((err, data) => {
+    //   if(err) return res.json({
+    //     msg : 'Unable to save story.'
+    //   }) 
+    //   res.json(data); 
+    // })
   },
   getAllStories : (req, res) => {
     Story.find({}, (err, data) => {
