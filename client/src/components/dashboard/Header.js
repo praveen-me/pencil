@@ -3,8 +3,14 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import LogoutLinks from '../auth/LogoutLinks';
 import LoginLinks from '../auth/LoginLinks';
+import { setInitialUser } from '../../store/actions/authActions';
+
 
 class Header extends Component {
+  componentDidMount() {
+    this.props.dispatch(setInitialUser())    
+  }
+  
   render() {
     const {currentUser} = this.props;
     return (

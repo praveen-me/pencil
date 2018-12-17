@@ -21,7 +21,7 @@ router.get('/:username',(req, res) => {
   res.render('index');
 }) 
 
-router.get('/story',(req, res) => {
+router.get('/story/:storyId',(req, res) => {
   res.render('index');
 })
 

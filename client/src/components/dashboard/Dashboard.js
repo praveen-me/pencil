@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { getAllStories } from '../../store/actions/storyActions';
 import { connect } from 'react-redux';
 import { setInitialUser } from '../../store/actions/authActions';
-
+import {Link} from 'react-router-dom';
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -38,14 +38,20 @@ class Dashboard extends Component {
               <div className="story-container">
                 {
                   allStories && allStories.map(story => (
-                    <div className="story" key={story._id}>
-                      <h3 className="story-head">
-                      {story.title}
-                      </h3>
-                      <p className="story-description">
-                      {story.description}
-                      </p>  
-                    </div>
+                    <Link to={`/story/${story._id}`} key={story._id}>
+                      <div className="story" key={story._id}>
+                        <div className="story-info-block">
+                          <h3 className="story-head">
+                          {story.title}
+                          <p className="story-date">{new Date(story.date).toDateString()}</p>
+                        </h3>
+                        </div>
+                        <p className="story-description">
+                        {story.description.slice(0, 100)}...
+                        </p>
+                        <p className="story-author">By - {story.userName}</p>  
+                      </div>
+                    </Link>
                   ))
                 }
               </div>
