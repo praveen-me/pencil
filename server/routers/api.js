@@ -13,4 +13,8 @@ router.post('/login', user.logIn);
 
 router.get('/isLoggedIn', user.isLoggedIn);
 
+router.get('/logOut', user.logOut)
+
+router.get('/:username/stories', story.getStoriesForSingleUser)
+
 module.exports = router;

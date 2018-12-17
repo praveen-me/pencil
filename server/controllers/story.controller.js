@@ -31,16 +31,12 @@ module.exports = {
       userName : req.user.fullName
     });
 
-    res.json({
-      newStory,
-      fullName : req.user.fullName
+    newStory.save((err, data) => {
+      if(err) throw err;
+      res.json({
+        data
+      })
     })
-    // newStory.save((err, data) => {
-    //   if(err) return res.json({
-    //     msg : 'Unable to save story.'
-    //   }) 
-    //   res.json(data); 
-    // })
   },
   getAllStories : (req, res) => {
     Story.find({}, (err, data) => {
@@ -53,9 +49,26 @@ module.exports = {
         })
       } else {
         return res.json({
-          msg : 'No Articles Avilable.'
+          allStories : []
         })
       }
     }) 
+  },
+  getStoriesForSingleUser : (req, res) => {
+    let username = req.params.username;
+    User.findOne({username}, (err, userData) => {
+      if (err) throw err;
+      Story.find({user : userData._id}, (err, data) => {
+        if(data.length === 0) {
+          res.status(302).json({
+            msg : "You don't have any article."
+          })
+        } else {
+          res.json({
+            userStories : data
+          })
+        }
+      })
+    })
   }
 }

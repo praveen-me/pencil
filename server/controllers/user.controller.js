@@ -46,8 +46,7 @@ module.exports = {
         User.findOne({_id : user._id}, {password : 0}, (err, data) => {
           if(err) throw err;
           return res.json({
-            data : data,
-            stories : data.stories
+            data : data
           })
         })
       });
@@ -66,5 +65,11 @@ module.exports = {
         msg : "Please login to get your details."
       })
     }
+  }, 
+  logOut : (req, res) => {
+    req.logOut();
+    res.status(200).json({
+      msg : "Logout Completed"
+    })
   }
 }

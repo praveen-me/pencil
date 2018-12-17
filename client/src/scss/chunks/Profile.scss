@@ -1,0 +1,36 @@
+@import './../vars';
+
+.me-container {
+  display:  grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 2rem 0;
+  grid-gap: 1rem;
+  padding: 0.5rem;
+}
+
+.profile-details {
+  margin: 1rem 0;
+  font-size: 1.1rem;
+}
+
+.profile-fullName {
+  font-size: 2rem;
+}
+
+.story-info {
+  margin: 1rem 0;
+  color: #606060;
+  &:hover {
+    color: #3d3d3d;
+  }
+}
+
+.story-title {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+
+.empty-box {
+  font-size: 1.2rem;
+  margin: 1.5rem 0;
+}

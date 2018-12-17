@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
-
+import { logOut } from '../../store/actions/authActions';
+import {connect} from 'react-redux'
 class LoginLinks extends Component {
+
+  handleLogOut = e => {
+    if(navigator.onLine) {
+      this.props.dispatch(logOut())
+    }
+  }
+  
   render() {
+    const {currentUser} = this.props;
     return (
       <div className="auth-block">
-        <button className="btn">
+        <button className="btn" onClick={this.handleLogOut}>
           <Link to="/">
             Log Out
           </Link>
@@ -16,7 +25,7 @@ class LoginLinks extends Component {
           </Link>
         </button>
         <button className="btn started-btn">
-          <Link to="/me">
+          <Link to={`/${currentUser.username}`}>
             Me
           </Link>
         </button>
@@ -25,4 +34,10 @@ class LoginLinks extends Component {
   }
 }
 
-export default LoginLinks;
+function mapStateToProps(state) {
+  return {
+    currentUser : state.currentUser
+  }
+}
+
+export default connect(mapStateToProps)(LoginLinks);

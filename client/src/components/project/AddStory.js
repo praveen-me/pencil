@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import {addStory} from '../../store/actions/storyActions';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
+import { setInitialUser } from '../../store/actions/authActions';
 
 
 class AddStory extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +19,11 @@ class AddStory extends Component {
       isLoading : false
     }
   }
+
+  componentWillMount() {
+    this.props.dispatch(setInitialUser())
+  }
+  
 
   handleSubmit = e => {
     e.preventDefault();
@@ -41,6 +48,7 @@ class AddStory extends Component {
           })
           // call action here
           this.props.dispatch(addStory(data));
+          this.props.history.push('/');
         })
         .catch(err => {
           this.setState({

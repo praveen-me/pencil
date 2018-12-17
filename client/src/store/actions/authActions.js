@@ -1,12 +1,10 @@
 export function signUp(data) {
-  console.log(data, "in action");
   return {
     type : 'SIGNUP'
   }
 }
 
 export function logIn(data) {
-  console.log(data, "in login action")
   return {
     type : 'LOGIN', 
     data
@@ -21,6 +19,18 @@ export function setInitialUser() {
         return dispatch({
           type : "LOGIN",
           data
+        })
+      })
+  }
+}
+
+export function logOut() {
+  return dispatch => {
+    fetch(`/api/logOut`)
+      .then(res => res.json())
+      .then(data => {
+        return dispatch({
+          type : "LOGOUT"
         })
       })
   }

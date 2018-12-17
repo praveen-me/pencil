@@ -1,13 +1,13 @@
 const initState = {
   allStories : [],
   lastStory : {},
-  currentUser : {}
+  currentUser : {},
+  userStories : []
 }
 
 export default function rootReducer(state = initState, action) {
   switch(action.type) {
     case "ADD_STORY": {
-      console.log(action.data, "in reducer")
       return {
         ...state,
         lastStory : action.data
@@ -26,7 +26,6 @@ export default function rootReducer(state = initState, action) {
     }
 
     case "LOGIN" : {
-      console.log(action.data.data, "in login reducer")
       const user = action.data.data
       
       const currentUser  = {
@@ -39,6 +38,22 @@ export default function rootReducer(state = initState, action) {
         currentUser
       }
     }
+
+    case "LOGOUT" : {
+      return {
+        ...state,
+        currentUser : {}
+      };
+    }
+
+    case "SET_USER_STORIES": {
+      console.log(action.data.userStories)
+      // return state;
+      return {
+        ...state,
+        userStories : [...action.data.userStories] 
+      }
+    } 
 
     default: return state;
   }

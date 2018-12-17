@@ -17,5 +17,13 @@ router.get('/signup', (req, res) => {
   res.render('index');
 })
 
+router.get('/:username',(req, res) => {
+  res.render('index');
+}) 
+
+router.get('/story',(req, res) => {
+  res.render('index');
+})
+
 
 module.exports = router;

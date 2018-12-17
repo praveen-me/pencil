@@ -6,6 +6,8 @@ import AddStory from './components/project/AddStory';
 import Dashboard from './components/dashboard/Dashboard';
 import SignUp from './components/auth/SignUp';
 import LogIn from './components/auth/LogIn';
+import Me from './components/project/Me';
+import Story from './components/project/Story';
 
 class App extends Component {
   render() {
@@ -18,6 +20,8 @@ class App extends Component {
             <Route path="/add-story" component={AddStory}/>
             <Route path="/signup" component={SignUp}/>
             <Route path="/login" component={LogIn}/>
+            <Route path="/:username" component={Me}/>
+            <Route path="/story" component={Story}/>
           </Switch>
         </React.Fragment>
       </Router>

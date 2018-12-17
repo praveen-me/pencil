@@ -24,3 +24,10 @@ export function getAllStories() {
       })
   }
 }
+
+export function setUserStories(data) {
+  return {
+    type : "SET_USER_STORIES",
+    data 
+  }
+}

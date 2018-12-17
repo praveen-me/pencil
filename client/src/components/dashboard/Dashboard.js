@@ -23,9 +23,11 @@ class Dashboard extends Component {
   render() { 
     const {allStories} = this.props;
     let isLoading = this.state.isLoading;
-    
+
     if(allStories.length) {
       isLoading = false
+    } else {
+      isLoading = false;
     }
     
     return (

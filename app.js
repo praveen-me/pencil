@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 const passport = require('passport');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const app = express();
 
 //Connecting To Mongodb
@@ -45,7 +46,8 @@ app.use(session({
   saveUninitialized : false,
   cookie : {
     maxAge : 500000
-  }
+  },
+  store: new MongoStore({ url: 'mongodb://localhost/altupdates-session' })
 }))
 
 app.use(passport.initialize());
