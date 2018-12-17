@@ -16,12 +16,12 @@ class App extends Component {
         <React.Fragment>
           <Header/>
           <Switch>
+            <Route path="/story/:id"  component={Story}/>
             <Route path="/" exact component={Dashboard}/>
             <Route path="/add-story" component={AddStory}/>
             <Route path="/signup" component={SignUp}/>
             <Route path="/login" component={LogIn}/>
             <Route path="/:username" component={Me}/>
-            <Route path="/story" component={Story}/>
           </Switch>
         </React.Fragment>
       </Router>
