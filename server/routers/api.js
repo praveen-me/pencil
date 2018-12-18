@@ -17,4 +17,6 @@ router.get('/logOut', user.logOut)
 
 router.get('/:username/stories', story.getStoriesForSingleUser)
 
+router.post('/stories/:storyId/clap', story.setClaps);
+
 module.exports = router;

@@ -9,6 +9,10 @@ const storySchema = new mongoose.Schema({
   cover : {type : String, default : ''},
   date : {type : Date, default : new Date()},
   claps : {type : Number, default : 0},
+  userClapped : [{
+    userId : ObjectId,
+    claps : {type : Number, default : 0, max : 50}
+  }],
   userName : String
 })
 

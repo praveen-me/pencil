@@ -1,60 +1,76 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-let interval = ''
-
 class Story extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentStoryClaps : 0
+      currentUserClaps : 0, 
+      msg : ''
     }
+    this.interval = ''
   }
 
   handleMultipleClaps = e => {
-    interval = setInterval(() => {
+    this.interval = setInterval(() => {
       this.setState((state) => ({
-        currentStoryClaps : ++state.currentStoryClaps
+        currentUserClaps : ++state.currentUserClaps
       }))
     }, 500)
   }
   
   clearMultipleClaps = e => {
-    clearInterval(interval)
+    clearInterval(this.interval)
   }
 
   handleClaps = e => {
-    this.setState(state => ({
-      currentStory : ++state.currentStoryClaps
-    }))
+    const {currentUser, currentStory} = this.props;
+    if(currentUser._id && currentStory.user !== currentUser._id && this.state.currentUserClaps < 50) {
+      this.setState(state => ({
+        currentStory : ++state.currentUserClaps
+      }))
+    }
   }
 
+  componentDidUpdate() {
+    const {currentUser, currentStory} = this.props;
+    const {currentUserClaps} = this.state;
+    fetch(`/api/stories/${currentStory._id}/clap`, {
+      method : "POST",
+      headers : {
+        'Content-Type' : 'application/json'
+      },
+      body : JSON.stringify({
+        claps : currentUserClaps,
+        userId : currentUser._id
+      })
+    }) 
+  }
 
   render() {
-    const {allStories, storyId} = this.props;
-    const currentStory = allStories.filter(story => story._id === storyId);
+    const {currentStory} = this.props;
     
     return (
       <main className="wrapper">
       <div className="single-story-conatiner">
         {
-          currentStory[0]._id ? (
+          currentStory._id ? (
             <div className="story_story-block">
               <div className="story-info-block">
                 <h2 className="single_story-title">
-                {currentStory[0].title}
+                {currentStory.title}
                 </h2>
-                <span className="single_story-date">{new Date(currentStory[0].date).toDateString()}</span>
+                <span className="single_story-date">{new Date(currentStory.date).toDateString()}</span>
               </div>
               <p className="single_story-description">
-                {currentStory[0].description}
+                {currentStory.description}
               </p>
               <div className="single_story-author">
-                <h4 className="story-author">By - {currentStory[0].userName}</h4>
+                <h4 className="story-author">By - {currentStory.userName}</h4>
                 <div className="clap-block">
                   <button 
-                  onMouseDown={this.handleMultipleClaps} onClick={this.handleClaps} onMouseUp={this.clearMultipleClaps}>Clap</button>
-                  <span>{this.state.currentStoryClaps}</span>
+                  onMouseDown={this.handleMultipleClaps} onClick={this.handleClaps} onMouseUp={this.clearMultipleClaps} >Clap</button>
+                  <span>{currentStory.claps+this.state.currentUserClaps}</span>
                 </div>
               </div>
             </div>
@@ -67,9 +83,12 @@ class Story extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
+  const currentStory = state.allStories.filter(story => story._id === ownProps.match.params.id);
+  
   return {
-    allStories : state.allStories,
-    storyId : ownProps.match.params.id   
+    storyId : ownProps.match.params.id,
+    currentUser : state.currentUser,
+    currentStory : currentStory[0]   
   }
 }
 

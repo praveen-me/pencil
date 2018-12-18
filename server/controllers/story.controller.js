@@ -70,5 +70,42 @@ module.exports = {
         }
       })
     })
+  },
+  setClaps : (req, res) => {
+    const storyId = req.params.storyId;
+    const clapsData = req.body;
+    
+    Story.findById(storyId, (err, data) => {
+      let clappedUserIndex = '';
+      let isUserClapped = false;
+
+      data.claps += clapsData.claps;
+      if(data.userClapped.length > 0) {
+        isUserClapped = data.userClapped.some((user,i) => {
+          if(user.userId === clapsData.userId) {
+            clappedUserIndex = i;
+            return true;
+          } else {
+            clappedUserIndex = '';
+            return false;
+          }
+        })
+      }
+
+      if(isUserClapped && clappedUserIndex) {
+        data.userClapped[clappedUserIndex].claps += clapsData.claps
+      } else {
+        data.userClapped.push({
+          userId : clapsData.userId,
+          claps : clapsData.claps
+        })
+      }
+
+      res.json({
+        data
+      })
+
+    })
+    
   }
 }
