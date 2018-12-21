@@ -1,9 +1,11 @@
 const express = require('express');
-const router = express.Router();
 const story = require('./../controllers/story.controller');
 const user = require('./../controllers/user.controller');
+const auth = require('./../modules/auth');
 
-router.post('/add-story', story.addStory);
+const router = express.Router();
+
+router.post('/add-story', auth.isLoggedIn, story.addStory);
 
 router.get('/stories', story.getAllStories);
 
@@ -13,10 +15,10 @@ router.post('/login', user.logIn);
 
 router.get('/isLoggedIn', user.isLoggedIn);
 
-router.get('/logOut', user.logOut)
+router.get('/logOut', user.logout);
 
-router.get('/:username/stories', story.getStoriesForSingleUser)
+router.get('/:username/stories', auth.isLoggedIn, story.getStoriesForSingleUser);
 
-router.post('/stories/:storyId/clap', story.setClaps);
+router.post('/stories/:storyId/clap', auth.isLoggedIn, story.setClaps);
 
 module.exports = router;

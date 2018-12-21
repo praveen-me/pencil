@@ -25,26 +25,25 @@ class Story extends Component {
 
   handleClaps = e => {
     const {currentUser, currentStory} = this.props;
+    // const {currentUserClaps} = this.state;
+
+
     if(currentUser._id && currentStory.user !== currentUser._id && this.state.currentUserClaps < 50) {
       this.setState(state => ({
         currentStory : ++state.currentUserClaps
-      }))
-    }
-  }
-
-  componentDidUpdate() {
-    const {currentUser, currentStory} = this.props;
-    const {currentUserClaps} = this.state;
-    fetch(`/api/stories/${currentStory._id}/clap`, {
-      method : "POST",
-      headers : {
-        'Content-Type' : 'application/json'
-      },
-      body : JSON.stringify({
-        claps : currentUserClaps,
-        userId : currentUser._id
+      }), function() {
+        fetch(`/api/stories/${currentStory._id}/clap`, {
+          method : "POST",
+          headers : {
+            'Content-Type' : 'application/json'
+          },
+          body : JSON.stringify({
+            claps : this.state.currentUserClaps,
+            userId : currentUser._id
+          })
+        })
       })
-    }) 
+    }
   }
 
   render() {

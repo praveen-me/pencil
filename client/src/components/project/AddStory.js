@@ -61,7 +61,7 @@ class AddStory extends Component {
         isLoading : false,
         errMsg : "Please connected to a secure connection."
       })
-    }    
+    }  
   }
 
   handleChange = e => {

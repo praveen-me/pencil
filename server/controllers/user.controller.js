@@ -1,75 +1,70 @@
-const User = require('./../models/User');
 const passport = require('passport');
-const Story = require('./../models/Story');
 const mongoose = require('mongoose');
+const User = require('./../models/User');
 
 module.exports = {
-  signUp : (req, res) => {
+  signUp: (req, res) => {
     const user = req.body;
-    console.log(user.username)
+    console.log(user.username);
     const newUser = new User({
       ...user,
-      _id : new mongoose.Types.ObjectId()
-    })
+      _id: new mongoose.Types.ObjectId(),
+    });
 
-    User.findOne({username : user.username}, (err, data) => {
-      if(data) {
-       return res.status(302).json({
-          'msg' : 'username is not available'
-        })
-      } else {
-        newUser.save((err, data) => {
-          if(err) return res.json({
-            "msg" : "Problem in saving your data. Please try again."
-          })
-          res.status(200).json({
-            msg : "Signup Successful"
-          })
+    User.findOne({ username: user.username }, (err, data) => {
+      if (data) {
+        return res.status(302).json({
+          msg: 'username is not available',
         });
-      }     
-    })
-  }, 
-  logIn : function(req, res, next) {
-    passport.authenticate('local', function(err, user, info) {
-      if (err) { return next(err); }
-      
-      if (!user) { 
-        return res.status(404).json({
-          msg :  "Invalid user creadentials. Please try again."
-        }) 
       }
-  
-      req.logIn(user, function(err) {
-  
-        if (err) { return next(err); }
-        
-        User.findOne({_id : user._id}, {password : 0}, (err, data) => {
-          if(err) throw err;
+      newUser.save((err, data) => {
+        if (err) {
           return res.json({
-            data : data
-          })
-        })
+            msg: 'Problem in saving your data. Please try again.',
+          });
+        }
+        return res.status(200).json({
+          msg: 'Signup Successful',
+        });
+      });
+    });
+  },
+  logIn: (req, res, next) => {
+    passport.authenticate('local', (err, user) => {
+      if (err) { return next(err); }
+      if (!user) {
+        return res.status(404).json({
+          msg: 'Invalid user creadentials. Please try again.',
+        });
+      }
+      return req.logIn(user, (err) => {
+        if (err) { return next(err); }
+        return User.findOne({_id: user._id}, { password: 0 }, (err, data) => {
+          if (err) throw err;
+          return res.json({
+            data,
+          });
+        });
       });
     })(req, res, next);
-  }, 
-  isLoggedIn : (req, res) => {
-    if(req.user) {
-      User.findOne({_id : req.user._id}, {password : 0}, (err, data) => {
-        if(err) throw err;
+  },
+  isLoggedIn: (req, res) => {
+    if (req.user) {
+      return User.findOne({ _id: req.user._id }, { password: 0 }, (err, data) => {
+        if (err) throw err;
         return res.json({
-          data : data
-        })
-      })
-    } else {
-      return res.status(401).json({
-        msg : "Please login to get your details."
-      })
+          data,
+        });
+      });
     }
-  }, 
-  logOut : (req, res) => {
+    return res.status(401).json({
+      msg: 'Please login to get your details.',
+    });
+  },
+  logout: (req, res) => {
     req.logOut();
-    res.status(200).json({
-      msg : "Logout Completed"
-    })
-  }
-}
+    return res.status(200).json({
+      msg: 'Logout Completed',
+    });
+  },
+};

@@ -31,3 +31,7 @@ export function setUserStories(data) {
     data 
   }
 }
+
+export function setClaps(data) {
+  
+}

@@ -13,7 +13,7 @@ class Dashboard extends Component {
   
   componentWillMount() {
     this.setState({
-      isLoading : true
+      isLoading : false
     }, () => {
       this.props.dispatch(getAllStories())
       this.props.dispatch(setInitialUser())
@@ -22,14 +22,8 @@ class Dashboard extends Component {
 
   render() { 
     const {allStories} = this.props;
-    let isLoading = this.state.isLoading;
-
-    if(allStories.length) {
-      isLoading = false
-    } else {
-      isLoading = false;
-    }
     
+    let isLoading = this.state.isLoading;    
     return (
       <main>
         {
