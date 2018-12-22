@@ -1,14 +1,62 @@
-export function signUp(data) {
-  return {
-    type : 'SIGNUP'
-  }
+export function signUp(userCreds, cb) {
+  return (dispatch) => {
+    fetch('/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userCreds),
+    })
+      .then((res) => {
+        if (res.status === 302) {
+          res.json()
+            .then((data) => {
+              cb(data);
+              return dispatch({
+                type: 'SIGNUP_ERR',
+              });
+            });
+        } else {
+          res.json()
+            .then((data) => {
+              cb(true);
+              return dispatch({
+                type: 'SIGNUP',
+              });
+            });
+        }
+      });
+  };
 }
 
-export function logIn(data) {
-  return {
-    type : 'LOGIN', 
-    data
-  }
+export function logIn(userCreds, cb) {
+  return (dispatch) => {
+    fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userCreds),
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          res.json()
+            .then((data) => {
+              // make action for data
+              cb(true);
+              return dispatch({
+                type: 'LOGIN',
+                data,
+              });
+            });
+        } else {
+          res.json()
+            .then((data) => {
+              cb(data);
+            });
+        }
+      });
+  };
 }
 
 export function setInitialUser() {

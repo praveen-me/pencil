@@ -3,6 +3,7 @@ import AuthButton from './AuthButton';
 import { connect } from 'react-redux';
 import {logIn} from '../../store/actions/authActions';
 import {Redirect} from 'react-router-dom';
+import Loader from '../project/Loader';
 
 class LogIn extends Component {
   constructor(props) {
@@ -34,31 +35,19 @@ class LogIn extends Component {
       isLoading : true
     })
     if(navigator.onLine) {
-      fetch(`/api/login`, {
-        method : "POST",
-        headers : {
-          'Content-Type' : 'application/json'
-        },
-        body : JSON.stringify(this.state.userInfo)
-      })
-      .then(res => {
-        if(res.status === 200) {
-          res.json()
-          .then(data => {
-            // make action for data
-            this.props.dispatch(logIn(data))
-            console.log(data)
+      this.props.dispatch(logIn(this.state.userInfo, (isSucced) => {
+        if(isSucced === true) {
+          this.setState({
+            isLoading : false,
+            msg : ''
           })
-        } else {
-          res.json()
-          .then(data => {
-            this.setState({
-              isLoading : false,
-              msg : data.msg,
-            })
-          })
+        } else if(isSucced.msg) {
+          this.setState({
+            isLoading: false,
+            msg: data.msg,
+          }); 
         }
-      })
+      }))
     } else {
       this.setState({
         isLoading : false,
@@ -68,24 +57,26 @@ class LogIn extends Component {
   }
   
   render() {
-    const {msg} = this.state;
+    const {msg, isLoading} = this.state;
     const {currentUser} = this.props;
 
     if(currentUser._id) return <Redirect to="/" />
 
     return (
-      <div className="auth-container wrapper middle">
-        <AuthButton />        
-        <form className="auth-form" onSubmit={this.handleSubmit}>
-          <input type="text" name="username" placeholder="Enter your username" onChange={this.handleChange}/>
-          <input type="password" name="password" placeholder="Enter your password"
-          onChange={this.handleChange}/>
-          {
-            msg ? <p className="warning-box">{msg}</p> : ''
-          }
-          <button type="submit" className="btn started-btn">Log In</button>
-        </form>
-      </div>
+      isLoading ? <Loader/> : (
+        <div className="auth-container wrapper middle">
+          <AuthButton />        
+          <form className="auth-form" onSubmit={this.handleSubmit}>
+            <input type="text" name="username" placeholder="Enter your username" onChange={this.handleChange}/>
+            <input type="password" name="password" placeholder="Enter your password"
+            onChange={this.handleChange}/>
+            {
+              msg ? <p className="warning-box">{msg}</p> : ''
+            }
+            <button type="submit" className="btn started-btn">Log In</button>
+          </form>
+        </div>
+      )
     );
   }
 }

@@ -11,7 +11,10 @@ module.exports = (passport) => {
       done(err, user);
     });
   });
-
+  /*
+   * passport local strategy takes username and password
+   * compare with the user's document in db
+  */
   passport.use(new LocalStrategy(
     (username, password, done) => {
       User.findOne({ username }, (err, user) => {
