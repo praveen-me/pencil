@@ -29,7 +29,7 @@ class SignUp extends Component {
       }
     })
   }
-
+  // function for handling data when submitting
   handleSubmit = e => {
     e.preventDefault();
     this.setState({
