@@ -36,6 +36,7 @@ class SignUp extends Component {
       isLoading: true
     })
 
+
     this.props.dispatch(signUp(this.state.userInfo, (isSucced) => {
       if(isSucced === true) {
         this.setState({
